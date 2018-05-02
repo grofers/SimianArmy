@@ -137,8 +137,8 @@ public class BasicChaosEmailNotifier extends ChaosEmailNotifier {
     public String buildEmailSubject(String to) {
         String emailSubjectPrefix = cfg.getStrOrElse("simianarmy.chaos.notification.subject.prefix", "");
         String emailSubjectSuffix = cfg.getStrOrElse("simianarmy.chaos.notification.subject.suffix", "");
-        return String.format("%sChaos Monkey Termination Notification for %s%s",
-                                                emailSubjectPrefix, to, emailSubjectSuffix);
+        return String.format("%sChaos Monkey Notification%s",
+                                                emailSubjectPrefix, emailSubjectSuffix);
     }
 
     /**
@@ -154,11 +154,11 @@ public class BasicChaosEmailNotifier extends ChaosEmailNotifier {
         String emailBodyPrefix = cfg.getStrOrElse("simianarmy.chaos.notification.body.prefix", "");
         String emailBodySuffix = cfg.getStrOrElse("simianarmy.chaos.notification.body.suffix", "");
         String body = emailBodyPrefix;
-        body += String.format("Instance %s of %s %s is being terminated by Chaos monkey.",
-                    instanceId, group.type(), group.name());
+        body += String.format("Instance: %s\nAutoscaling Group: %s\n",
+                    instanceId, group.name());
         if (chaosType != null) {
             body += "\n";
-            body += String.format("Chaos type: %s.", chaosType.getKey());
+            body += String.format("Chaos Type: %s", chaosType.getKey());
         }
         body += emailBodySuffix;
         return body;
